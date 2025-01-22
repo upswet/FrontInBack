@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестовый фронт</title>
+</head>
+<body>
+    <script>
+        var baseUrl = window.location.origin;
+        console.log(baseUrl);
+
+        const interval = setInterval(function() {
+            //запрос апи бэка. Подробнее см https://fruntend.com/posts/sposoby-otpravki-http-zaprosov-v-javascript
+            var url=baseUrl+'/api/v1/test/random';
+            const otherParam = {
+                headers: {
+                    "content-type": "application/json; charset=UTF-8",
+                },
+                //body: JSON.stringify(user),
+                method: "GET",
+            };
+            fetch(url, otherParam)
+                .then(data => data.json())
+                .then(response => {
+                    document.getElementsByClassName('text')[0].textContent='полученное число: '+response
+                    console.log(response);
+                })
+                .catch(error => console.log(error));
+        }, 3000);
+
+    </script>
+
+    <p class="text">Здесь должно отображаться случайное число полученное с бэка</p>
+</body>
+</html>
